@@ -5,13 +5,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
   <title>Document</title>
 </head>
 
 <body>
-  <div class="ui container" style="margin-top: 20px;">
+  <!-- <div class="ui container" style="margin-top: 20px;">
     <h1 class="ui header"> Liderboard </h1>
     <div class="ui divider"></div>
 
@@ -25,7 +23,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr class="main-table">
           <td data-label="Name">James</td>
           <td data-label="Age">24</td>
           <td data-label="Job">Engineer</td>
@@ -52,14 +50,110 @@
               <input id="job" type="text" placeholder="Job">
             </div>
 
-            <div class="ui small primary labeled icon button">
+            <button class="ui small primary labeled icon button">
               <i class="user icon"></i> Add User
-            </div>
+            </button>
           </th>
         </tr>
       </tfoot>
     </table>
+  </div> -->
+
+  <div class="main-table">
+    <h1 class="Name">ye</h1>
+    <br>
+    <br>
+    <br>
+    <h1 class="Age">2</h1>
+    <br>
+    <br>
+    <br>
+    <h1 class="Job">csad</h1>
+    <br>
+    <br>
+    <br>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>
+  <button class="delete">Delete</button>
+  <br>
+  <br>
+  <br>
+  <div>
+    <br>
+    <br>
+    <br>
+    <input id="Name" type="text">
+    <br>
+    <br>
+    <br>
+    <input id="Age" type="number">
+    <br>
+    <br>
+    <br>
+    <input id="Job" type="text">
+    <br>
+    <br>
+    <br>
+    <button class="button">Update</button>
+    <br>
+    <br>
+    <br>
   </div>
   <script src="./client.js"></script>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+  //info
+const name = document.querySelector('.Name')
+const age = document.querySelector('.Age')
+const job = document.querySelector('.Job')
+//table
+const mainTable = document.querySelector('.main-table')
+//input
+const Name = document.querySelector('#Name')
+const Age = document.querySelector('#Age')
+const Job = document.querySelector('#Job')
+//btn
+const btn = document.querySelector('.button')
+
+
+axios('http://localhost:8080/lider')
+.then(res => { 
+    for(let lider of res.data){
+        mainTable.innerHTML += `
+        <h1 class="Name">${lider.name}</h1>
+        <h1 class="Job">${lider.age}</h1>
+        <h1 class="Age">${lider.job}</h1>
+        `
+    }
+})
+
+
+
+btn.onclick = () => {
+    let data = {
+        name:Name.value,
+        age:Age.value,
+        job:Job.value
+    }
+    console.log('btn is working');
+    axios.post('http://localhost:8080/lider',data)
+    .then(res => { 
+      console.log(res.data);
+    // for(let lider of res.data){
+    //     mainTable.innerHTML += `
+    //     <h1 class="Name">${lider.name}</h1>
+    //     <h1 class="Job">${lider.age}</h1>
+    //     <h1 class="Age">${lider.job}</h1>
+    //     `
+    // }
+})  
+}
+
+</script>
 </html>
