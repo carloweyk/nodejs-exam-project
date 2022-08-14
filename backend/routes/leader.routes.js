@@ -1,27 +1,20 @@
-import { PrismaClient } from '@prisma/client'
 import { Router } from "express";
+import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient()
 const router = Router()
+const prisma = new PrismaClient()
 
-router.get('/lider', async (req, res) => {
-  try {
-    let array = await prisma.lider.findMany()
-    res.send(array)
-  } catch {
-    res.status(500).send('error')
-  }
-})
+
 router.post('/lider', async (req, res) => {
   try {
     let name = req.body.name
-    let age = +req.body.age
+    let age = req.body.age
     let job = req.body.job
     let array = await prisma.lider.create({
       data: {
-        name:name,
-        age:age,
-        job:job
+        name,
+        age,
+        job
       }
     })
     res.status(201).json(array)
@@ -31,11 +24,21 @@ router.post('/lider', async (req, res) => {
     console.error(error);
   }
 })
-router.put('/lider/:id', (req, res) => {
+
+router.get('/lider', async (req, res) => {
+  try {
+    let array = await prisma.lider.findMany()
+    res.send(array)
+  } catch {
+    res.status(500).send('error')
+  }
+})
+
+router.put('/lider/:id', async (req, res) => {
   try {
     let { name, age, job } = req.body
     let id = +req.params.id
-    prisma.lider.update({
+    await prisma.lider.update({
       where: {
         id
       }, data: {
@@ -44,18 +47,20 @@ router.put('/lider/:id', (req, res) => {
         job
       }
     })
+    res.sendStatus(201)
   } catch (error) {
     res.status(500).send('error')
   }
 })
-router.delete(`/lider/:id`, (req, res) => {
+router.delete(`/lider/:id`,async (req, res) => {
   try {
     let id = +req.params.id
-    prisma.lider.delete({
+    await prisma.lider.delete({
       where: {
         id
       }
     })
+    res.sendStatus(201)
   } catch (error) {
     res.status(500).send('error')
   }
