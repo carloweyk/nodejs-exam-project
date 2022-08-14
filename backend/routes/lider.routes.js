@@ -6,17 +6,18 @@ const router = Router()
 router.get('/lider', async (req, res) => {
     try {
         let array = await allLider()
-        res.json(array)
+        res.send(array)
     } catch {
         res.status(500).send('error')
     }
 })
 router.post('/lider', async (req, res) => {
     try {
-        console.log(req.body);
+
         let { name, age, job } = req.body
         let array = await createLider(name, age, job)
-        res.json(array)
+        res.send(array)
+        console.log(req.body);
 
     } catch (error) {
         console.error(error);

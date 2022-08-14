@@ -6,12 +6,12 @@ export async function  allLider() {
     return prisma.lider.findMany()
 }
 
-export function createLider(name, age, job) {
+export async function createLider(name, age, job) {
     return prisma.lider.create({
         data: {
-            name,
-            age,
-            job
+            name:name,
+            age:age,
+            job:job
         }
     })
 }

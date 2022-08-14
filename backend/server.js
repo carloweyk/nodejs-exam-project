@@ -1,7 +1,7 @@
 // import express modules
 import express from 'express'
 import cors from 'cors'
-import liderRoutes from './routes/lider.routes.js'
+import liderRoutes from './routes/leader.routes.js'
 
 const app = express()
 //body parser
